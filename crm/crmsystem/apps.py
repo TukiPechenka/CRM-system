@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class CrmsystemConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'crmsystem'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "crmsystem"

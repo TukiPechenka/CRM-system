@@ -7,18 +7,32 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('crmsystem', '0001_initial'),
+        ("crmsystem", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Ad',
+            name="Ad",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=250)),
-                ('promotionChannel', models.CharField(max_length=250)),
-                ('budget', models.PositiveIntegerField()),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='crmsystem.product')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=250)),
+                ("promotionChannel", models.CharField(max_length=250)),
+                ("budget", models.PositiveIntegerField()),
+                (
+                    "product",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="crmsystem.product",
+                    ),
+                ),
             ],
         ),
     ]
