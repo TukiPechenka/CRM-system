@@ -12,20 +12,33 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+from django.urls import reverse_lazy
+
+from environ import Env
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+environ = Env(DEBUG=(bool, False))
+Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-brz964&2yi5c^5+j-&9_c&m+(uv+q&kyxo=&mjjg)$*nnwl9v8"
+SECRET_KEY = (
+    environ("SECRET_KEY")
+    or "django-insecure-brz964&2yi5c^5+j-&9_c&m+(uv+q&kyxo=&mjjg)$*nnwl9v8"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = environ("IF_DEBUG") == "1"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "0.0.0.0",
+]
 
 
 # Application definition
@@ -38,6 +51,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "crmsystem.apps.CrmsystemConfig",
+    "advertisements.apps.AdvertisementsConfig",
+    "contracts.apps.ContractsConfig",
+    "customers.apps.CustomersConfig",
+    "leads.apps.LeadsConfig",
+    "products.apps.ProductsConfig",
 ]
 
 MIDDLEWARE = [
@@ -48,6 +66,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "crmsystem.middlewares.LoginRequiredMiddleware",
 ]
 
 ROOT_URLCONF = "crm.urls"
@@ -74,10 +93,20 @@ WSGI_APPLICATION = "crm.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": environ("DB"),
+        "USER": environ("USER"),
+        "PASSWORD": environ("PASSWORD"),
+        "HOST": environ("HOST"),
+        "PORT": environ("PORT"),
     }
 }
 
@@ -118,9 +147,12 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 MEDIA_URL = "media/"
-MEDIA_ROOT = "uploads/documents"
+MEDIA_ROOT = "uploads/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_REDIRECT_URL = reverse_lazy("crmsystem:index")
+LOGIN_URL = reverse_lazy("crmsystem:login")

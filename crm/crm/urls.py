@@ -18,4 +18,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-urlpatterns = [path("admin/", admin.site.urls), path("", include("crmsystem.urls"))]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("products/", include("products.urls")),
+    path("ads/", include("advertisements.urls")),
+    path("leads/", include("leads.urls")),
+    path("contracts/", include("contracts.urls")),
+    path("customers/", include("customers.urls")),
+    path("", include("crmsystem.urls")),
+]
