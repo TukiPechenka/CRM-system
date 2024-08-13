@@ -69,7 +69,7 @@ class LeadUpdateView(UpdateView):
 
 class LeadDeleteView(DeleteView):
     """
-    Представление удаления Потенциального клиента
+    Представление страницы удаления Потенциального клиента
     """
 
     queryset = (
