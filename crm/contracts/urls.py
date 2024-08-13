@@ -8,7 +8,7 @@ from .views import (
     ContractDeleteView,
 )
 
-app_name = "contracts"
+app_name = "contracts"  # pylint: disable=invalid-name
 
 urlpatterns = [
     path("", ContractListView.as_view(), name="contracts-list"),

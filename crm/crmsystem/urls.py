@@ -7,7 +7,7 @@ from .views import (
 )
 
 
-app_name = "crmsystem"
+app_name = "crmsystem"  # pylint: disable=invalid-name
 
 urlpatterns = [
     path("", IndexTemplateView.as_view(), name="index"),

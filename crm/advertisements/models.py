@@ -19,7 +19,7 @@ class Advertisement(models.Model):
     leads_count = models.PositiveIntegerField(default=0)
     customers_count = models.PositiveIntegerField(default=0)
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Мета информация о модели Рекламной компании.
         (Дополнительные параметры)
@@ -31,12 +31,16 @@ class Advertisement(models.Model):
         self, force_insert=False, force_update=False, using=None, update_fields=None
     ):
         if self.pk:
-            self.leads_count = Lead.objects.filter(ad=self, is_customer=False).count()
-            self.customers_count = Customer.objects.filter(lead__ad=self).count()
+            self.leads_count = Lead.objects.filter(  # pylint: disable=no-member
+                ad=self, is_customer=False
+            ).count()
+            self.customers_count = Customer.objects.filter(  # pylint: disable=no-member
+                lead__ad=self
+            ).count()
             contracts_cost = (
-                Customer.objects.filter(lead__ad=self).aggregate(
-                    models.Sum("contract__cost")
-                )["contract__cost__sum"]
+                Customer.objects.filter(  # pylint: disable=no-member
+                    lead__ad=self
+                ).aggregate(models.Sum("contract__cost"))["contract__cost__sum"]
                 or 0
             )
             self.profit = contracts_cost - self.budget

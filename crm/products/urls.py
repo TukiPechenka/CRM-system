@@ -8,7 +8,7 @@ from .views import (
     ProductDeleteView,
 )
 
-app_name = "products"
+app_name = "products"  # pylint: disable=invalid-name
 
 urlpatterns = [
     path("", ProductListView.as_view(), name="products-list"),

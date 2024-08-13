@@ -19,7 +19,11 @@ class Customer(models.Model):
     ):
         super().save(force_insert, force_update, using, update_fields)
         self.lead.is_customer = True
-        self.lead.save()
+        self.lead.save()  # pylint: disable=no-member
 
     def __str__(self):
-        return self.lead.last_name + " " + self.lead.first_name
+        return (
+            self.lead.last_name  # pylint: disable=no-member
+            + " "
+            + self.lead.first_name  # pylint: disable=no-member
+        )

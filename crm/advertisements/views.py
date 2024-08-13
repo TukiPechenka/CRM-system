@@ -26,7 +26,9 @@ class AdDetailView(DetailView):
     Представление детальной информации о Рекламной компании
     """
 
-    queryset = Advertisement.objects.select_related("product").all()
+    queryset = Advertisement.objects.select_related(  # pylint: disable=no-member
+        "product"
+    ).all()
     template_name = "ads/ads-detail.html"
 
 

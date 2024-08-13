@@ -19,7 +19,7 @@ class Contract(models.Model):
         extension = filename.split(".")[-1]
         pk = self.pk - 1 if self.pk is not None else self.pk
         if not pk:
-            obj = Contract.objects.order_by("-id").first()
+            obj = Contract.objects.order_by("-id").first()  # pylint: disable=no-member
             pk = obj.id if obj is not None else 0
         return f"documents/{pk + 1}.{extension}"
 

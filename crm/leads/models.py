@@ -18,7 +18,7 @@ class Lead(models.Model):
         self, force_insert=False, force_update=False, using=None, update_fields=None
     ):
         super().save(force_insert, force_update, using, update_fields)
-        self.ad.save()
+        self.ad.save()  # pylint: disable=no-member
 
     def __str__(self):
         return self.last_name + " " + self.first_name

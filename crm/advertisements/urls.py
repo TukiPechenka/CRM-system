@@ -10,7 +10,7 @@ from .views import (
 )
 
 
-app_name = "advertisements"
+app_name = "advertisements"  # pylint: disable=invalid-name
 
 urlpatterns = [
     path("", AdListView.as_view(), name="ads-list"),

@@ -9,7 +9,7 @@ from .views import (
 )
 
 
-app_name = "leads"
+app_name = "leads"  # pylint: disable=invalid-name
 
 urlpatterns = [
     path("", LeadListView.as_view(), name="leads-list"),

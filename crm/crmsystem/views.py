@@ -21,10 +21,16 @@ class IndexTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["products_count"] = Product.objects.count()
-        context["advertisements_count"] = Advertisement.objects.count()
-        context["leads_count"] = Lead.objects.filter(is_customer=False).count()
-        context["customers_count"] = Customer.objects.count()
+        context["products_count"] = Product.objects.count()  # pylint: disable=no-member
+        context["advertisements_count"] = (
+            Advertisement.objects.count()  # pylint: disable=no-member
+        )
+        context["leads_count"] = Lead.objects.filter(  # pylint: disable=no-member
+            is_customer=False
+        ).count()
+        context["customers_count"] = (
+            Customer.objects.count()  # pylint: disable=no-member
+        )
         return context
 
 
